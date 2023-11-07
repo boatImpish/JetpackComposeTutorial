@@ -1,5 +1,6 @@
 package com.kaixinjun.jetpackcomposetutorial
 
+import SampleData
 import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -14,6 +15,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -32,7 +35,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             JetpackComposeTutorialTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    MessageCard(Message("Android", "Jetpack Compose"))
+                    Conversation(messages = SampleData.conversationSample)
                 }
             }
         }
@@ -93,5 +96,22 @@ fun PreviewMessageCard() {
                 msg = Message("Lexi", "Hey, take a look at Jetpack Compose, it's great!")
             )
         }
+    }
+}
+
+@Composable
+fun Conversation(messages: List<Message>) {
+    LazyColumn {
+        items(messages) {
+            message -> MessageCard(msg = message)
+        }
+    }
+}
+
+@Preview
+@Composable
+fun PreviewConversation() {
+    JetpackComposeTutorialTheme {
+        Conversation(messages = SampleData.conversationSample)
     }
 }
